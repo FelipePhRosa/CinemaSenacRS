@@ -1,14 +1,10 @@
-
-
-
-function App() {
+import AdicionaDiretor from "./components/addDirector";
+import DeletarDiretor from "./components/deleteDirector";
+export default function App() {
   return (
     <>
-    <div className='w-full h-full bg-black'>
-      <p className='text-2xl text-blue-500'>teste</p>
-    </div>
+      <AdicionaDiretor/>
+      <DeletarDiretor/>
     </>
-  )
+  );
 }
-
-export default App

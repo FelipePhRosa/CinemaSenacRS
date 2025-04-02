@@ -3,9 +3,9 @@ USE Cinema;
 
 CREATE TABLE Diretor (
   id_diretor INT PRIMARY KEY IDENTITY(1,1),
-  nameDiretor VARCHAR(100) NOT NULL,
-  ageDiretor TINYINT NOT NULL,
-  nationality VARCHAR(60) NOT NULL
+  nameDiretor VARCHAR(100) NULL,
+  ageDiretor TINYINT NULL,
+  nationality VARCHAR(60) NULL
 );
 
 CREATE TABLE Filmes (
@@ -13,9 +13,9 @@ CREATE TABLE Filmes (
   title VARCHAR(100) NOT NULL,
   genre VARCHAR(100) NOT NULL,
   release_year INT NOT NULL,
-  id_diretor INT NOT NULL,
+  id_diretor INT NULL,
   FOREIGN KEY (id_diretor) REFERENCES Diretor(id_diretor) ON DELETE SET NULL,
-  id_ator INT NOT NULL,
+  id_ator INT NULL,
   FOREIGN KEY (id_ator) REFERENCES Atores(id_ator) ON DELETE SET NULL
 );
 

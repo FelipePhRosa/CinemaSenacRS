@@ -5,9 +5,9 @@ const knexdb = knex({
   connection: {
     host: '127.0.0.1',
     port: 3306,
-    user: 'aluno',
+    user: 'root',
     password: 'senacrs',
-    database: 'cinema',
+    database: 'cinema', 
   },
 })
 export default knexdb
