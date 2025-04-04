@@ -1,24 +1,27 @@
   import express from 'express' 
   import knexdb from './knexfile.js'
   import cors from 'cors'
-  const app = express();     // Cria instancia do aplicativo Express
-  app.use(express.json());  // Middleware para permitir que o servidor entenda JSON
-  app.use(cors());          // Middleware para habilitar CORS e permitir que o frontend acesse o backend
-  app.get("/", (req,res) =>{  //Rota principal ('/') que retorna uma mensagem
+  const app = express();     
+  app.use(express.json());  
+  app.use(cors()); 
+           
+  app.get("/", (req,res) =>{ 
     res.send('Servidor Rodando!');
   });
-  app.listen(3000, () => {   // Inicia o servidor na porta 3000
+
+  app.listen(3000, () => {   
     console.log(`Server is running port:3000`);
   });
 
   // Working
-  app.post("/diretores", async (req,res) =>{  //Rota que insere um diretor
+  app.post("/diretores", async (req,res) =>{  
     const {nameDiretor, ageDiretor, nationality} = req.body;
     const novoDiretor = await knexdb('diretor').insert({nameDiretor, ageDiretor, nationality});	
 
     res.send(`Diretor: ${nameDiretor} insert sucessfully!`);
   });
 
+  // Working
   app.post("/filmes", async (req, res) => {
     const {title, genre, release_year, id_diretor, id_ator} = req.body;
     const newFilm = await knexdb('filmes').insert({title, genre, release_year, id_diretor, id_ator});
@@ -27,12 +30,12 @@
   });
 
   // Working
-
-  app.get("/diretores", async (req,res) =>{  //Rota que retorna todos os diretores
+  app.get("/diretores", async (req,res) =>{  
     const diretores = await knexdb('diretor').select('*');
     res.json(diretores);
   }); 
 
+  // Working
   app.get('/diretoresbyid', async (req, res) => {
     const { id_diretor } = req.query;
     const diretor = await knexdb('diretor').select('*').where({ id_diretor });
@@ -43,11 +46,13 @@
     }
   });
 
+  // Working
   app.get("/filmes", async (req, res) => {
     const filmes = await knexdb('filmes').select('*')
     res.json(filmes)
   });
 
+  // Working
   app.get('/filmesbyid', async (req, res) => {
     const { id_filme } = req.body;
     const filme = await knexdb('filmes').select('*').where({id_filme})
@@ -61,16 +66,17 @@
   });
 
   // Working
-app.delete('/deldiretores', async (req, res) => {
-  const { id_diretor } = req.body;
-  if (!id_diretor) {
-    return res.status(400).send('id_diretor is required.');
-  }
+  app.delete('/deldiretores', async (req, res) => {
+    const { id_diretor } = req.body;
 
-  const diretor = await knexdb('diretor').where({ id_diretor }).delete();
-  if (diretor === 0) {
-    return res.status(404).send('Director not found.');
-  } else {
-    res.status(200).send('Director deleted successfully.');
-  }
-});
+    if (!id_diretor) {
+      return res.status(400).send('id_diretor is required.');
+    }
+
+    const diretor = await knexdb('diretor').where({ id_diretor }).delete();
+    if (diretor === 0) {
+      return res.status(404).send('Director not found.');
+    } else {
+      res.status(200).send('Director deleted successfully.');
+    }
+  });
